@@ -6,6 +6,7 @@
   "author": "maverock24",
   "license": "MIT",
   "type": "module",
+  "scripts": { "test": "node tests/qrspi-gate.test.ts" },
   "engines": { "node": ">=22.19.0" },
   "pi": { "extensions": ["./extensions"], "skills": ["./skills"] }
 }
