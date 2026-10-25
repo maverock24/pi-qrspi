@@ -10,10 +10,12 @@ import * as path from "node:path";
 const mod: any = await import(new URL("../extensions/qrspi-gate.ts", import.meta.url).href);
 const handlers: Record<string, Function[]> = {};
 const commands: Record<string, any> = {};
+let toolNames = ["question", "questionnaire"];
 const pi: any = {
 	on: (evt: string, fn: Function) => (handlers[evt] ??= []).push(fn),
 	registerCommand: (name: string, def: any) => (commands[name] = def),
 	sendUserMessage: () => {},
+	getAllTools: () => toolNames.map((name) => ({ name })),
 };
 mod.default(pi);
 
@@ -112,6 +114,31 @@ await answer("question", { question: "Release demo to Implement?", options: ["Re
 check("a question answered keep aligning does not", await advanceTo("Implement"), "block");
 writeState("Plan", "no");
 check("non-critical needs no release", await advanceTo("Implement"), "allow");
+
+console.log("--- no question tool installed ---");
+toolNames = [];
+notices.length = 0;
+await freshSession();
+check(
+	"warns once when neither question tool is installed",
+	notices.length === 1 && /question|questionnaire/.test(notices[0])
+		? {}
+		: { block: true, reason: `notices=${notices.length}` },
+	"allow",
+);
+toolNames = ["questionnaire"];
+notices.length = 0;
+await freshSession();
+check("silent when questionnaire is present", notices.length === 0 ? {} : { block: true, reason: `notices=${notices.length}` }, "allow");
+toolNames = ["question"];
+notices.length = 0;
+await freshSession();
+check("silent when question is present", notices.length === 0 ? {} : { block: true, reason: `notices=${notices.length}` }, "allow");
+toolNames = [];
+notices.length = 0;
+for (const h of handlers["session_start"] ?? []) await h({}, { ...ctx, hasUI: false });
+check("silent in a headless child with no question tool", notices.length === 0 ? {} : { block: true, reason: `notices=${notices.length}` }, "allow");
+toolNames = ["question", "questionnaire"];
 
 console.log("--- legacy letters and no ACTIVE ---");
 writeState("R");

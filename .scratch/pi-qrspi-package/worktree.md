@@ -36,7 +36,7 @@ lands in the next commit, since a task's own commit carries only its `Files`.
 - [x] T15. Extend the suite for the `question` release route
 - [x] T16. P4 gate: 42 checks and a three-hunk review
 - [x] T17. Warn once at `session_start` when no question tool exists
-- [ ] T18. Extend the suite for the startup warning
+- [x] T18. Extend the suite for the startup warning
 - [ ] T19. P5 gate: 46 checks and a four-hunk review
 - [ ] T20. Write `docs/AGENTS-snippet.md`
 - [ ] T21. Write `README.md`
