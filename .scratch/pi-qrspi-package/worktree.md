@@ -39,7 +39,7 @@ lands in the next commit, since a task's own commit carries only its `Files`.
 - [x] T18. Extend the suite for the startup warning
 - [x] T19. P5 gate: 46 checks and a four-hunk review
 - [x] T20. Write `docs/AGENTS-snippet.md`
-- [ ] T21. Write `README.md`
+- [x] T21. Write `README.md`
 - [ ] T22. P6 gate: docs counts, suite, file audit, live skill listing
 - [ ] T23. Final gate: clean tree, trailers, `ACTIVE` never committed
 
