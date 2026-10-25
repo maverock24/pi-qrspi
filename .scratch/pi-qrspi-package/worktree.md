@@ -19,11 +19,11 @@
 A task's box is ticked once its check prints the expected values; the tick
 lands in the next commit, since a task's own commit carries only its `Files`.
 
-- [ ] T1. Commit the alignment artifacts
+- [x] T1. Commit the alignment artifacts
 - [x] T2. Add `package.json`, the manifest pi reads
 - [x] T3. Add `.gitignore` that ignores `.scratch/ACTIVE` only
-- [ ] T4. Copy the gate into `extensions/`
-- [ ] T5. P1 gate: verify and record
+- [x] T4. Copy the gate into `extensions/`
+- [x] T5. P1 gate: verify and record
 - [ ] T6. Copy the suite into `tests/` with two edits
 - [ ] T7. Add `scripts.test`
 - [ ] T8. P2 gate: suite green from its new home
@@ -834,3 +834,19 @@ QRSPI: pi-qrspi-package
 | Plan commit messages and trailer | every task block |
 
 No plan step is left without a task.
+
+---
+
+## Records
+
+### P1 gate (T5)
+
+```
+copy identical
+manifest ok
+gate loads, default is a function
+ACTIVE ignored
+artifacts committable
+```
+
+`git status --porcelain` printed one line, ` M .scratch/pi-qrspi-package/state.md`, the Work Tree -> Implement stage change written by the session that opened this stage; T5 does not touch it. `/qrspi status` answered `QRSPI gate: ON. Active: pi-qrspi-package at Implement, not critical (/home/maverock24/github/pi-qrspi)` through the registered handler, and `pi -e "$PWD" --no-tools --no-session -p ...` exited 0, so the package loads with no extension error.
