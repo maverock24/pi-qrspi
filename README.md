@@ -46,7 +46,7 @@ pi loads instruction files only from the agent dir and the cwd and its ancestors
 .scratch/<slug>/*.md       the artifacts, committed with the work
 ```
 
-`.scratch/ACTIVE` is in this package's `.gitignore` and is never committed; the skill deletes it at PR. No `ACTIVE` file means no gate.
+In this repo `.scratch/` is git-ignored, so effort artifacts stay local; in your own repo that choice is yours, but `.scratch/ACTIVE` is never committed because the skill deletes it at PR. No `ACTIVE` file means no gate.
 
 ## Known limits
 
