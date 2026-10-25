@@ -16,8 +16,8 @@
 
 ## Progress
 
-A task's box is ticked once its check prints the expected values; the tick
-lands in the next commit, since a task's own commit carries only its `Files`.
+A task's box is ticked once its check prints the expected values. All 23
+boxes are ticked, so the tree is complete and hands off to PR.
 
 - [x] T1. Commit the alignment artifacts
 - [x] T2. Add `package.json`, the manifest pi reads
@@ -41,7 +41,7 @@ lands in the next commit, since a task's own commit carries only its `Files`.
 - [x] T20. Write `docs/AGENTS-snippet.md`
 - [x] T21. Write `README.md`
 - [x] T22. P6 gate: docs counts, suite, file audit, live skill listing
-- [ ] T23. Final gate: clean tree, trailers, `ACTIVE` never committed
+- [x] T23. Final gate: clean tree, trailers, `ACTIVE` never committed
 
 ## Dependency shape
 
@@ -920,3 +920,16 @@ tests/qrspi-gate.test.ts
 ```
 
 The suite log is at `/tmp/qrspi-p6.log`. The manual check ran without a TUI: `pi -e "$PWD" --mode rpc` answered `get_commands` with `skill:qrspi` at `/home/maverock24/github/pi-qrspi/skills/qrspi/SKILL.md` (`source: skill`, `scope: temporary`), and `pi -e "$PWD" --mode json -p "reply with ok"` showed the same path in the system prompt's `available_skills` block. The package copy collides with the installed `~/.pi/agent/extensions/qrspi-gate.ts`, so the live command was discovered as `qrspi:1`; plain `/qrspi status` came back unhandled (`disposition: started`), while `/qrspi:1 status` was handled and answered `QRSPI gate: ON. Active: pi-qrspi-package at Implement, not critical (/home/maverock24/github/pi-qrspi)`.
+
+### Final gate (T23)
+
+```
+0
+23
+0
+ACTIVE tracked=1
+ACTIVE ignored
+23
+```
+
+All six values match. Tree complete: 23 commits, one `QRSPI: pi-qrspi-package` trailer each, and `.scratch/ACTIVE` untracked and ignored from the first commit to this one. The push, the tag and the real `pi install git:github.com/maverock24/pi-qrspi` stay with the human.
