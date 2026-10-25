@@ -1,0 +1,11 @@
+{
+  "name": "pi-qrspi",
+  "version": "0.1.0",
+  "description": "QRSPI gate and skill as an installable pi package",
+  "keywords": ["pi-package", "qrspi"],
+  "author": "maverock24",
+  "license": "MIT",
+  "type": "module",
+  "engines": { "node": ">=22.19.0" },
+  "pi": { "extensions": ["./extensions"], "skills": ["./skills"] }
+}
