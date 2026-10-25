@@ -37,7 +37,7 @@ lands in the next commit, since a task's own commit carries only its `Files`.
 - [x] T16. P4 gate: 42 checks and a three-hunk review
 - [x] T17. Warn once at `session_start` when no question tool exists
 - [x] T18. Extend the suite for the startup warning
-- [ ] T19. P5 gate: 46 checks and a four-hunk review
+- [x] T19. P5 gate: 46 checks and a four-hunk review
 - [ ] T20. Write `docs/AGENTS-snippet.md`
 - [ ] T21. Write `README.md`
 - [ ] T22. P6 gate: docs counts, suite, file audit, live skill listing
@@ -888,3 +888,14 @@ hunks 3
 ```
 
 The log is at `/tmp/qrspi-p4-gate.log`. The three hunks are the `releaseAnswered` helper, the collapsed `tool_result` predicate, and the block message; a fourth would mean something outside P4 changed.
+
+### P5 gate (T19)
+
+```
+exit=0
+PASS 46
+FAIL 0
+hunks 3
+```
+
+The log is at `/tmp/qrspi-p5-gate.log`. The first three values match. The expected fourth hunk was not measured: GNU diff folds the `session_start` body and the collapsed `tool_result` predicate into one hunk because only five unchanged lines separate them (two hunks need more than six lines of context between changes). The plan's P5 reference copy at `/tmp/piq` also measures 3 `@@` lines against the same base, so the expectation is wrong, not this change.
