@@ -299,8 +299,9 @@ export default function (pi: ExtensionAPI) {
 					block: true,
 					reason:
 						`Blocked: "${effort.slug}" is not released, so alignment cannot end from here. ` +
-						`Ask the human: questionnaire, question id qrspi_release, options "Release to Implement" ` +
-						`and "Keep aligning". Then write Stage: Implement.`,
+						`Ask the human: questionnaire with question id qrspi_release and options ` +
+						`"Release to Implement" / "Keep aligning", or a question whose answer starts with ` +
+						`Release. Then write Stage: Implement.`,
 				};
 			}
 			return; // the bookkeeping file is otherwise writable

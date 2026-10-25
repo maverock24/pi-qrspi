@@ -32,7 +32,7 @@ lands in the next commit, since a task's own commit carries only its `Files`.
 - [x] T11. Mark the three external skills "if installed" and add the inline fallback
 - [x] T12. P3 gate: skill greps
 - [x] T13. Add `releaseAnswered` and collapse the `tool_result` predicate
-- [ ] T14. Name both release routes in the block message
+- [x] T14. Name both release routes in the block message
 - [ ] T15. Extend the suite for the `question` release route
 - [ ] T16. P4 gate: 42 checks and a three-hunk review
 - [ ] T17. Warn once at `session_start` when no question tool exists
