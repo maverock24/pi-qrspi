@@ -431,7 +431,7 @@ Expected: 46 `PASS` lines (42 plus 4), zero `FAIL`, `all checks passed`, exit 0.
 diff -u ~/.pi/agent/extensions/qrspi-gate.ts extensions/qrspi-gate.ts
 ```
 
-shows exactly four hunks and nothing else: the `releaseAnswered` helper, the `session_start` body, the collapsed `tool_result` predicate, and the block reason text.
+shows exactly three hunks and nothing else: the `releaseAnswered` helper, the `session_start` body together with the collapsed `tool_result` predicate, and the block reason text. Three, not four: the `session_start` and `tool_result` edits sit close enough that `diff` merges them into one hunk.
 
 **Commit**
 
@@ -512,6 +512,6 @@ QRSPI: pi-qrspi-package
 
 - **P4 loosens the gate's only human door.** A free-text answer could release an effort if the match were too broad. Mitigated in the phase itself: the `question` route needs the answer to start with `release` **and** the question text to mention release, and three negative assertions cover the unrelated-answer, keep-aligning and questionnaire-decline paths.
 - **The outline's expected numbers were wrong in three places** (44 vs 39 checks, the skill grep counts, the test import line), so a copied check would fail on a correct change. Mitigated: every expected value here was measured on `/tmp` copies with node v22.23.4, and P3 uses occurrence counts (`grep -o | wc -l`) instead of line counts, because two of the three "if installed" markers sit on one line.
-- **P1's `diff` check expires.** It compares against the installed gate and only holds until P4 edits the copy. Mitigated: it is P1's check alone, and P4 and P5 each end on a `diff -u` review of exactly four hunks.
+- **P1's `diff` check expires.** It compares against the installed gate and only holds until P4 edits the copy. Mitigated: it is P1's check alone, and P4 and P5 each end on a `diff -u` review of exactly three hunks.
 - **A package skill has never been observed loading live** (`research.md` Q6 unresolved). Mitigated: the manifest lists `pi.skills` explicitly rather than relying on convention, the file sits at `skills/qrspi/SKILL.md`, and P6's manual check reads the advertised location before anything is pushed.
 - **P5 runs one extra API call in every session, children included.** Mitigated: the notice goes through `say()`, so a `hasUI: false` child builds a string and drops it, and P5's fourth assertion covers that path specifically rather than inferring it from a check that runs with both tools present.

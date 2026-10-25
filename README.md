@@ -8,7 +8,7 @@ The gate acts only when a `.scratch/ACTIVE` file marks a live effort:
 
 - No code writes during alignment while the effort is `Critical: yes`; `.scratch/` stays writable.
 - Sensitive paths are critical whatever `state.md` says.
-- A critical effort leaves alignment only on the human's answer to the `qrspi_release` question.
+- A critical effort leaves alignment only on the human's answer: a questionnaire answer with id `qrspi_release`, or a question whose answer starts with Release and whose question text mentions release.
 - During Research the gate warns if a question tool fires: research asks the code, not the human.
 
 Eight stages: Questions, Research, Design, Structure, Plan, Work Tree, Implement, PR.
@@ -16,12 +16,12 @@ Toggle: `/qrspi on|off|status`, default ON.
 
 ## Prerequisites
 
-- A question tool: the `question` extension **or** the `questionnaire` extension in `~/.pi/agent/extensions/`. Either one can release an effort; with neither, the gate warns at session start because a critical effort cannot leave alignment.
+- A question tool: the `question` extension **or** the `questionnaire` extension in `~/.pi/agent/extensions/`. Either one can release an effort; with neither, the gate warns at session start when a live effort exists, because a critical effort cannot leave alignment.
 - Optional: `@tintinweb/pi-subagents` plus your own agent definitions in `~/.pi/agent/agents/`, for one subagent per stage. Without it, run the stages inline in one session.
 - Optional: the `grilling`, `codebase-design` and `code-review` skills under `~/.agents/skills/`. The skill says "if installed" and falls back to doing those steps inline.
 - node `>= 22.19.0`, which `engines.node` declares and only `npm test` needs; the extension itself loads through pi.
 
-No tool, skill or agent ships in this package.
+None of the prerequisites above ships here.
 
 ## Install
 
@@ -56,4 +56,4 @@ pi loads instruction files only from the agent dir and the cwd and its ancestors
 
 ## Development
 
-`npm test` runs `node tests/qrspi-gate.test.ts`: 46 checks against a fake pi and a temp repo, covering write blocking by stage and criticality, both release paths, the sensitive-path list and its per-repo additions, the startup warning and the non-critical warnings. There are no dependencies; node strips the types.
+`npm test` runs `node tests/qrspi-gate.test.ts`: 48 checks against a fake pi and a temp repo, covering write blocking by stage and criticality, both release paths, the sensitive-path list and its per-repo additions, the startup warning and the non-critical warnings. There are no dependencies; node strips the types.
