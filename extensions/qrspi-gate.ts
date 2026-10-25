@@ -132,6 +132,19 @@ function stageFromInput(input: any): string | undefined {
 	return undefined;
 }
 
+/** Did this tool result carry the human's release answer? */
+function releaseAnswered(toolName: string, details: any): boolean {
+	const answers = details?.answers;
+	if (Array.isArray(answers)) {
+		return answers.some(
+			(a: any) => a?.id === "qrspi_release" && /^release/i.test(String(a?.value ?? "")),
+		);
+	}
+	if (toolName !== "question") return false;
+	const answer = String(details?.answer ?? "").trim();
+	return /^release/i.test(answer) && /release/i.test(String(details?.question ?? ""));
+}
+
 /** Walk up from cwd looking for .scratch/ACTIVE. That file names the live effort. */
 function findActiveEffort(cwd: string): { root: string; slug: string } | undefined {
 	let dir = path.resolve(cwd);
@@ -218,12 +231,7 @@ export default function (pi: ExtensionAPI) {
 	// --- 3. The release is the human's answer, never the agent's claim ---------
 	pi.on("tool_result", async (event, ctx) => {
 		if (event.toolName !== "questionnaire" && event.toolName !== "question") return;
-		const answers = (event.details as any)?.answers;
-		if (!Array.isArray(answers)) return;
-		const released = answers.some(
-			(a: any) => a?.id === "qrspi_release" && /^release/i.test(String(a?.value ?? "")),
-		);
-		if (!released) return;
+		if (!releaseAnswered(event.toolName, event.details)) return;
 		releasedSlug = findActiveEffort(ctx.cwd)?.slug;
 		say(ctx, `QRSPI: "${releasedSlug}" released to Implement by the human.`, "info");
 	});
