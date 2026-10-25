@@ -34,7 +34,7 @@ lands in the next commit, since a task's own commit carries only its `Files`.
 - [x] T13. Add `releaseAnswered` and collapse the `tool_result` predicate
 - [x] T14. Name both release routes in the block message
 - [x] T15. Extend the suite for the `question` release route
-- [ ] T16. P4 gate: 42 checks and a three-hunk review
+- [x] T16. P4 gate: 42 checks and a three-hunk review
 - [ ] T17. Warn once at `session_start` when no question tool exists
 - [ ] T18. Extend the suite for the startup warning
 - [ ] T19. P5 gate: 46 checks and a four-hunk review
@@ -877,3 +877,14 @@ The log is at `/tmp/qrspi-p2.log`; the source suite still differs from `tests/qr
 ```
 
 All eight values match the expected list. The two zero-count `grep -c` commands exit 1, which is grep's own semantics for no match, not a failed check; the six non-zero ones exit 0. `npm test` stays green (exit=0, 39 PASS, 0 FAIL, log at `/tmp/qrspi-p3.log`), and the only two lines naming an outside file are the Design line and the PR line, whose three pointers each say `if installed`.
+
+### P4 gate (T16)
+
+```
+exit=0
+PASS 42
+FAIL 0
+hunks 3
+```
+
+The log is at `/tmp/qrspi-p4-gate.log`. The three hunks are the `releaseAnswered` helper, the collapsed `tool_result` predicate, and the block message; a fourth would mean something outside P4 changed.
