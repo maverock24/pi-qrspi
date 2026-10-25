@@ -221,11 +221,22 @@ export default function (pi: ExtensionAPI) {
 	};
 
 	// Fresh window, fresh budget: the whole point of the stage boundary.
-	pi.on("session_start", async () => {
+	pi.on("session_start", async (_event, ctx) => {
 		warnedAboutContext = false;
 		releasedSlug = undefined;
 		warnedStages.clear();
 		warnedResearchAsk = false;
+
+		// The release path needs a question tool. Say so once, and only to a human.
+		const names = pi.getAllTools().map((t) => t.name);
+		if (!names.includes("question") && !names.includes("questionnaire")) {
+			say(
+				ctx,
+				`QRSPI: neither "question" nor "questionnaire" is installed, so a critical effort cannot be released. ` +
+					`Install one, or close the effort before alignment would block.`,
+				"warning",
+			);
+		}
 	});
 
 	// --- 3. The release is the human's answer, never the agent's claim ---------
