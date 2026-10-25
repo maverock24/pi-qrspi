@@ -12,9 +12,10 @@
  *    change critical whatever state.md claims, so `Critical: no` cannot
  *    downgrade it. Paths come from the built-in list plus an optional
  *    <repo>/.qrspi-sensitive-paths.
- * 3. Release. A critical effort leaves alignment only when the human answers a
- *    questionnaire whose id is `qrspi_release`, so the agent cannot release
- *    itself. The answer is read from the tool result, not from the agent.
+ * 3. Release. A critical effort leaves alignment only on the human's answer,
+ *    read from the tool result and never from the agent: either a questionnaire
+ *    answer with id `qrspi_release`, or a question whose answer starts with
+ *    Release and whose question text mentions release.
  * 4. Asking. During stage Research the gate warns: research asks the code, not
  *    the human.
  * 5. Context. Warn once per session past 60% usage.
@@ -135,7 +136,7 @@ function stageFromInput(input: any): string | undefined {
 /** Did this tool result carry the human's release answer? */
 function releaseAnswered(toolName: string, details: any): boolean {
 	const answers = details?.answers;
-	if (Array.isArray(answers)) {
+	if (toolName === "questionnaire" && Array.isArray(answers)) {
 		return answers.some(
 			(a: any) => a?.id === "qrspi_release" && /^release/i.test(String(a?.value ?? "")),
 		);
@@ -227,7 +228,9 @@ export default function (pi: ExtensionAPI) {
 		warnedStages.clear();
 		warnedResearchAsk = false;
 
-		// The release path needs a question tool. Say so once, and only to a human.
+		// The release path needs a question tool. Say so once, and only to a human,
+		// and only where a live effort exists: no ACTIVE file means no gate at all.
+		if (!findActiveEffort(ctx.cwd)) return;
 		const names = pi.getAllTools().map((t) => t.name);
 		if (!names.includes("question") && !names.includes("questionnaire")) {
 			say(
