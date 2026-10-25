@@ -133,7 +133,7 @@ If your window is filling, write what you learned into an artifact, keep `state.
 
 **R Research.** Spawn one child per question cluster: read `questions.md` only, ticket out of context. Each reports what exists with a `file:line` per claim and no opinion, and writes `research/<n>.md`. Then one child merges them into `research.md`, one answer per question by number. Done when every question is answered or marked `unresolved` with a reason, and the answer is enough to design on.
 
-**D Design.** In this window. Read `tree.md`, `research.md`, `ticket.md`. Write the end state, the out-of-scope list, and every decision with what blocks it. Put the frontier to the human as one round (read `~/.agents/skills/grilling/SKILL.md`, and `~/.agents/skills/codebase-design/SKILL.md` when a module's shape is at stake). Record the answers as settled, add what they unblock, repeat. Done when the frontier is empty.
+**D Design.** In this window. Read `tree.md`, `research.md`, `ticket.md`. Write the end state, the out-of-scope list, and every decision with what blocks it. Put the frontier to the human as one round (read `~/.agents/skills/grilling/SKILL.md` if installed, and `~/.agents/skills/codebase-design/SKILL.md` if installed when a module's shape is at stake). Record the answers as settled, add what they unblock, repeat. Done when the frontier is empty. None of those three skills ship with this package: if they are not installed, do the same steps inline.
 
 **S Structure.** Spawn one child: read `tree.md`, cut the work into vertical slices, each a full path through every layer and checkable on its own. Prefactor first when it makes the change easy. Write `outline.md`: slices in order, files touched, the check that proves each. Done when every decision sits in a slice and every slice names its check.
 
@@ -143,7 +143,7 @@ If your window is filling, write what you learned into an artifact, keep `state.
 
 **I Implement.** Spawn one child per ready task, in parallel: read its task and `plan.md`, make the change, run the task's check, commit with the trailer `QRSPI: <slug>`. Tick the task in `worktree.md` as each reports. Done when every check has passed.
 
-**PR.** Fan out: one child runs the repo's tests, typecheck and lint; one checks the commit log for missing `QRSPI: <slug>` or `QRSPI-Tier: trivial`; one reads `~/.agents/skills/code-review/SKILL.md` and reviews the diff with `plan.md` as the spec. Write `review.md` from their reports. Post findings with `mr-report-findings` when a merge request is loaded, open the MR when a remote and forge exist, and delete `.scratch/ACTIVE`. Done when the human has read the diff and owns it.
+**PR.** Fan out: one child runs the repo's tests, typecheck and lint; one checks the commit log for missing `QRSPI: <slug>` or `QRSPI-Tier: trivial`; one reads `~/.agents/skills/code-review/SKILL.md` if installed and reviews the diff with `plan.md` as the spec. Write `review.md` from their reports. Post findings with `mr-report-findings` when a merge request is loaded, open the MR when a remote and forge exist, and delete `.scratch/ACTIVE`. Done when the human has read the diff and owns it.
 
 ## Why
 
