@@ -40,7 +40,7 @@ lands in the next commit, since a task's own commit carries only its `Files`.
 - [x] T19. P5 gate: 46 checks and a four-hunk review
 - [x] T20. Write `docs/AGENTS-snippet.md`
 - [x] T21. Write `README.md`
-- [ ] T22. P6 gate: docs counts, suite, file audit, live skill listing
+- [x] T22. P6 gate: docs counts, suite, file audit, live skill listing
 - [ ] T23. Final gate: clean tree, trailers, `ACTIVE` never committed
 
 ## Dependency shape
@@ -899,3 +899,24 @@ hunks 3
 ```
 
 The log is at `/tmp/qrspi-p5-gate.log`. The first three values match. The expected fourth hunk was not measured: GNU diff folds the `session_start` body and the collapsed `tool_result` predicate into one hunk because only five unchanged lines separate them (two hunks need more than six lines of context between changes). The plan's P5 reference copy at `/tmp/piq` also measures 3 `@@` lines against the same base, so the expectation is wrong, not this change.
+
+### P6 gate (T22)
+
+```
+2
+1
+3
+exit=0
+PASS 46
+FAIL 0
+7
+.gitignore
+README.md
+docs/AGENTS-snippet.md
+extensions/qrspi-gate.ts
+package.json
+skills/qrspi/SKILL.md
+tests/qrspi-gate.test.ts
+```
+
+The suite log is at `/tmp/qrspi-p6.log`. The manual check ran without a TUI: `pi -e "$PWD" --mode rpc` answered `get_commands` with `skill:qrspi` at `/home/maverock24/github/pi-qrspi/skills/qrspi/SKILL.md` (`source: skill`, `scope: temporary`), and `pi -e "$PWD" --mode json -p "reply with ok"` showed the same path in the system prompt's `available_skills` block. The package copy collides with the installed `~/.pi/agent/extensions/qrspi-gate.ts`, so the live command was discovered as `qrspi:1`; plain `/qrspi status` came back unhandled (`disposition: started`), while `/qrspi:1 status` was handled and answered `QRSPI gate: ON. Active: pi-qrspi-package at Implement, not critical (/home/maverock24/github/pi-qrspi)`.
