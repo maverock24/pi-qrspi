@@ -14,6 +14,35 @@
 4. Tasks run in id order, which is a topological order of the graph. Verification tasks (T5, T8, T12, T16, T19, T22, T23) change no deliverable; they tick the task list in this file and record the measured output, which is the commit.
 5. `npm test` writes its log to `/tmp/qrspi-p<N>.log` in the checks so the `PASS`/`FAIL` counts can be read without re-running.
 
+## Progress
+
+A task's box is ticked once its check prints the expected values; the tick
+lands in the next commit, since a task's own commit carries only its `Files`.
+
+- [ ] T1. Commit the alignment artifacts
+- [x] T2. Add `package.json`, the manifest pi reads
+- [ ] T3. Add `.gitignore` that ignores `.scratch/ACTIVE` only
+- [ ] T4. Copy the gate into `extensions/`
+- [ ] T5. P1 gate: verify and record
+- [ ] T6. Copy the suite into `tests/` with two edits
+- [ ] T7. Add `scripts.test`
+- [ ] T8. P2 gate: suite green from its new home
+- [ ] T9. Copy the skill and move `ACTIVE` out of the slug list
+- [ ] T10. Give the `codebase-design` pointer its full path
+- [ ] T11. Mark the three external skills "if installed" and add the inline fallback
+- [ ] T12. P3 gate: skill greps
+- [ ] T13. Add `releaseAnswered` and collapse the `tool_result` predicate
+- [ ] T14. Name both release routes in the block message
+- [ ] T15. Extend the suite for the `question` release route
+- [ ] T16. P4 gate: 42 checks and a three-hunk review
+- [ ] T17. Warn once at `session_start` when no question tool exists
+- [ ] T18. Extend the suite for the startup warning
+- [ ] T19. P5 gate: 46 checks and a four-hunk review
+- [ ] T20. Write `docs/AGENTS-snippet.md`
+- [ ] T21. Write `README.md`
+- [ ] T22. P6 gate: docs counts, suite, file audit, live skill listing
+- [ ] T23. Final gate: clean tree, trailers, `ACTIVE` never committed
+
 ## Dependency shape
 
 `T1` is the trunk (the base commit). After it the graph opens three short fans and rejoins once per phase boundary:
