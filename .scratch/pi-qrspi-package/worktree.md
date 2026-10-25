@@ -24,9 +24,9 @@ lands in the next commit, since a task's own commit carries only its `Files`.
 - [x] T3. Add `.gitignore` that ignores `.scratch/ACTIVE` only
 - [x] T4. Copy the gate into `extensions/`
 - [x] T5. P1 gate: verify and record
-- [ ] T6. Copy the suite into `tests/` with two edits
-- [ ] T7. Add `scripts.test`
-- [ ] T8. P2 gate: suite green from its new home
+- [x] T6. Copy the suite into `tests/` with two edits
+- [x] T7. Add `scripts.test`
+- [x] T8. P2 gate: suite green from its new home
 - [ ] T9. Copy the skill and move `ACTIVE` out of the slug list
 - [ ] T10. Give the `codebase-design` pointer its full path
 - [ ] T11. Mark the three external skills "if installed" and add the inline fallback
@@ -850,3 +850,15 @@ artifacts committable
 ```
 
 `git status --porcelain` printed one line, ` M .scratch/pi-qrspi-package/state.md`, the Work Tree -> Implement stage change written by the session that opened this stage; T5 does not touch it. `/qrspi status` answered `QRSPI gate: ON. Active: pi-qrspi-package at Implement, not critical (/home/maverock24/github/pi-qrspi)` through the registered handler, and `pi -e "$PWD" --no-tools --no-session -p ...` exited 0, so the package loads with no extension error.
+
+### P2 gate (T8)
+
+```
+exit=0
+PASS 39
+FAIL 0
+all checks passed 1
+diff changed lines 4
+```
+
+The log is at `/tmp/qrspi-p2.log`; the source suite still differs from `tests/qrspi-gate.test.ts` by only the header and import lines.
