@@ -27,7 +27,7 @@ lands in the next commit, since a task's own commit carries only its `Files`.
 - [x] T6. Copy the suite into `tests/` with two edits
 - [x] T7. Add `scripts.test`
 - [x] T8. P2 gate: suite green from its new home
-- [ ] T9. Copy the skill and move `ACTIVE` out of the slug list
+- [x] T9. Copy the skill and move `ACTIVE` out of the slug list
 - [ ] T10. Give the `codebase-design` pointer its full path
 - [ ] T11. Mark the three external skills "if installed" and add the inline fallback
 - [ ] T12. P3 gate: skill greps
