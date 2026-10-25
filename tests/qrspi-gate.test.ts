@@ -81,23 +81,35 @@ writeState("PR");
 check("code edit at PR", await call("edit", { path: "src/app.ts", edits: [{ oldText: "a", newText: "b" }] }), "allow");
 
 console.log("--- release: the human's answer, not the agent's claim ---");
-const answer = async (id: string, value: string) => {
-	for (const h of handlers["tool_result"] ?? [])
-		await h({ toolName: "questionnaire", details: { answers: [{ id, value, label: value }] } }, ctx);
+const answer = async (toolName: string, details: any) => {
+	for (const h of handlers["tool_result"] ?? []) await h({ toolName, details }, ctx);
 };
+const questionnaire = (value: string) => ({ answers: [{ id: "qrspi_release", value, label: value }] });
 setActive(true);
 await freshSession();
 notices.length = 0;
 writeState("Plan", "yes");
 check("self-release to Implement is blocked", await advanceTo("Implement"), "block");
-await answer("qrspi_release", "keep-aligning");
+await answer("questionnaire", questionnaire("keep-aligning"));
 check("a decline does not release", await advanceTo("Implement"), "block");
-await answer("qrspi_release", "release");
+await answer("questionnaire", questionnaire("release"));
 check("the human's release answer opens it", await advanceTo("Implement"), "allow");
 check("release was announced", notices.some((n) => n.includes("released")) ? {} : { block: true, reason: "no notice" }, "allow");
 await freshSession();
 writeState("Plan", "yes");
 check("release does not survive a fresh session", await advanceTo("Implement"), "block");
+await freshSession();
+writeState("Plan", "yes");
+await answer("question", { question: "Release demo to Implement?", options: ["Release to Implement", "Keep aligning"], answer: "Release to Implement" });
+check("a question answer releases", await advanceTo("Implement"), "allow");
+await freshSession();
+writeState("Plan", "yes");
+await answer("question", { question: "Which colour for the button?", options: ["Red", "Blue"], answer: "Release the hounds" });
+check("a question that never said release does not", await advanceTo("Implement"), "block");
+await freshSession();
+writeState("Plan", "yes");
+await answer("question", { question: "Release demo to Implement?", options: ["Release to Implement", "Keep aligning"], answer: "keep aligning" });
+check("a question answered keep aligning does not", await advanceTo("Implement"), "block");
 writeState("Plan", "no");
 check("non-critical needs no release", await advanceTo("Implement"), "allow");
 
