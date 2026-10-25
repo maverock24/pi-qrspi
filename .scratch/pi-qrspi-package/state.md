@@ -1,6 +1,6 @@
 # PI-QRSPI package
 
 - **Slug**: pi-qrspi-package
-- **Stage**: Implement
+- **Stage**: PR
 - **Critical**: no
-- **Done**: Questions, Research, Design, Structure, Plan, Work Tree
+- **Done**: Questions, Research, Design, Structure, Plan, Work Tree, Implement
