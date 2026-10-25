@@ -21,7 +21,7 @@ lands in the next commit, since a task's own commit carries only its `Files`.
 
 - [ ] T1. Commit the alignment artifacts
 - [x] T2. Add `package.json`, the manifest pi reads
-- [ ] T3. Add `.gitignore` that ignores `.scratch/ACTIVE` only
+- [x] T3. Add `.gitignore` that ignores `.scratch/ACTIVE` only
 - [ ] T4. Copy the gate into `extensions/`
 - [ ] T5. P1 gate: verify and record
 - [ ] T6. Copy the suite into `tests/` with two edits
