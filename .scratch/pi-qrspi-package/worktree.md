@@ -30,7 +30,7 @@ lands in the next commit, since a task's own commit carries only its `Files`.
 - [x] T9. Copy the skill and move `ACTIVE` out of the slug list
 - [x] T10. Give the `codebase-design` pointer its full path
 - [x] T11. Mark the three external skills "if installed" and add the inline fallback
-- [ ] T12. P3 gate: skill greps
+- [x] T12. P3 gate: skill greps
 - [ ] T13. Add `releaseAnswered` and collapse the `tool_result` predicate
 - [ ] T14. Name both release routes in the block message
 - [ ] T15. Extend the suite for the `question` release route
@@ -862,3 +862,18 @@ diff changed lines 4
 ```
 
 The log is at `/tmp/qrspi-p2.log`; the source suite still differs from `tests/qrspi-gate.test.ts` by only the header and import lines.
+
+### P3 gate (T12)
+
+```
+0
+3
+0
+1
+1
+3
+1
+1
+```
+
+All eight values match the expected list. The two zero-count `grep -c` commands exit 1, which is grep's own semantics for no match, not a failed check; the six non-zero ones exit 0. `npm test` stays green (exit=0, 39 PASS, 0 FAIL, log at `/tmp/qrspi-p3.log`), and the only two lines naming an outside file are the Design line and the PR line, whose three pointers each say `if installed`.
